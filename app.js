@@ -33,6 +33,7 @@ app.get("/", (req, res) => {
 });
 
 // Setup routes
+app.use("/api/v1/contacts", require("./routes/contactRoutes"));
 
 // Error handling for unknown routes
 app.use(() => {
