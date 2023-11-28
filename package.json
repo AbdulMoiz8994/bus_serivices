@@ -1,0 +1,13 @@
+{
+  "name": "newyork-buses-backend",
+  "version": "1.0.0",
+  "description": "This repo for newyork buses backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
