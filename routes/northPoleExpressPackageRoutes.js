@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const asyncHandler = require("express-async-handler");
+const cloudinary = require("cloudinary").v2;
 const NorthPoleExpressPackage = require("./../models/NorthPoleExpressPackage");
+const mongoose = require("mongoose");
 
 const router = Router();
 
@@ -37,6 +39,80 @@ router.get(
     res
       .status(200)
       .json({ status: "success", data: { northPoleExpressPackage } });
+  })
+);
+
+// Upload package image
+router.post(
+  "/upload/media",
+  asyncHandler(async (req, res) => {
+    const packageImage = req?.files?.packageImage;
+
+    // Validate Image
+    const fileSize = packageImage?.size / 10000;
+    // const fileExt = packageImage?.name
+    //   ?.split(".")[1]
+    //   .toLowerCase();
+    const fileExt = path.extname(packageImage?.name);
+
+    const validExtensions = /\.(jpg|jpeg|png)$/i;
+
+    if (!validExtensions.test(fileExt)) {
+      res.status(400).json({
+        status: "error",
+        message: "File extension must be jpg, jpeg, or png",
+      });
+      return;
+    }
+
+    if (fileSize > 10000) {
+      res.status(400).json({
+        status: "error",
+        message: "File size must be lower than 10mb",
+      });
+      return;
+    }
+
+    const packageImageId = new mongoose.Types.ObjectId();
+
+    cloudinary.uploader.upload(
+      packageImage?.tempFilePath,
+      {
+        // use_filename: true,
+        // unique_filename: false,
+        folder: "newyorkbuses/packages",
+        public_id: packageImageId,
+      },
+      async (err, image) => {
+        if (err) {
+          console.error("async (err, image) => {", err);
+          return res
+            .status(400)
+            .json({ status: "error", message: err.message });
+        }
+
+        console.log("File Uploaded");
+
+        fs.unlink(packageImage?.tempFilePath, (err) => {
+          if (err) {
+            console.error(
+              "fs.unlink(packageImage.tempFilePath, (err) => {",
+              err
+            );
+            return res
+              .status(400)
+              .json({ status: "error", message: err.message });
+          }
+        });
+
+        res.status(200).json({
+          status: "success",
+          data: {
+            productImage: image?.url,
+          },
+        });
+      }
+    );
   })
 );
 
