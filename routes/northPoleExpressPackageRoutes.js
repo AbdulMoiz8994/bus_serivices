@@ -51,7 +51,6 @@ router.post(
       location,
       bus,
       duration,
-      dateAndTime,
       features,
     } = req.body;
 
@@ -66,7 +65,6 @@ router.post(
       !location ||
       !bus ||
       !duration ||
-      !dateAndTime ||
       !features
     ) {
       return res
@@ -99,7 +97,6 @@ router.patch(
       location,
       bus,
       duration,
-      dateAndTime,
       features,
     } = req.body;
 
@@ -114,7 +111,6 @@ router.patch(
       !location ||
       !bus ||
       !duration ||
-      !dateAndTime ||
       !features
     ) {
       return res

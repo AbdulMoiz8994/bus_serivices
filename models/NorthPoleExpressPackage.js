@@ -54,14 +54,6 @@ const northPoleExpressPackageSchema = new mongoose.Schema(
       required: [true, "A north pole express package must have a duration!"],
       trim: true,
     },
-    dateAndTime: {
-      type: String,
-      required: [
-        true,
-        "A north pole express package must have a date and time!",
-      ],
-      trim: true,
-    },
     features: {
       type: String,
       required: [true, "A north pole express package must have a features!"],
