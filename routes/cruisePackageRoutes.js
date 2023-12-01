@@ -4,6 +4,7 @@ const CruisePackage = require("./../models/CruisePackage");
 
 const router = Router();
 
+// Get all cruise packages
 router.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -17,6 +18,7 @@ router.get(
   })
 );
 
+// Get cruise package
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -33,6 +35,7 @@ router.get(
   })
 );
 
+// Create cruise package
 router.post(
   "/",
   asyncHandler(async (req, res) => {
@@ -79,6 +82,7 @@ router.post(
   })
 );
 
+// Update cruise package
 router.patch(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -137,6 +141,7 @@ router.patch(
   })
 );
 
+// Delete cruise package
 router.delete(
   "/:id",
   asyncHandler(async (req, res) => {

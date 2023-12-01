@@ -4,6 +4,7 @@ const NorthPoleExpressPackage = require("./../models/NorthPoleExpressPackage");
 
 const router = Router();
 
+// Get all north pole express packages
 router.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -17,6 +18,7 @@ router.get(
   })
 );
 
+// Get north pole express package
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -38,6 +40,7 @@ router.get(
   })
 );
 
+// Create north pole express package
 router.post(
   "/",
   asyncHandler(async (req, res) => {
@@ -84,6 +87,7 @@ router.post(
   })
 );
 
+// Update north pole express package
 router.patch(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -138,6 +142,7 @@ router.patch(
   })
 );
 
+// Delete north pole express package
 router.delete(
   "/:id",
   asyncHandler(async (req, res) => {
