@@ -39,6 +39,10 @@ app.use(
   "/api/v1/northPoleExpressPackages",
   require("./routes/northPoleExpressPackageRoutes")
 );
+app.use(
+  "/api/v1/groupsAndCharters",
+  require("./routes/groupsAndChartersRoutes")
+);
 
 // Error handling for unknown routes
 app.use(() => {
