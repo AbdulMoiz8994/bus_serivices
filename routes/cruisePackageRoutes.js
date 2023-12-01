@@ -2,7 +2,9 @@ const { Router } = require("express");
 const asyncHandler = require("express-async-handler");
 const cloudinary = require("cloudinary").v2;
 const CruisePackage = require("./../models/CruisePackage");
+const fs = require("fs");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const router = Router();
 
