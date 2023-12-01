@@ -1,6 +1,8 @@
 const cors = require("cors");
-const express = require("express");
 const createHttpError = require("http-errors");
+const express = require("express");
+const fileUpload = require("express-fileupload");
+const path = require("path");
 
 const app = express();
 
@@ -24,6 +26,15 @@ app.all("/*", function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 });
+
+// Setup for file uploading
+app.use(
+  fileUpload({
+    // debug: true,
+    useTempFiles: true,
+    tempFileDir: path.join(__dirname, "./tmp"),
+  })
+);
 
 // Default route and handler
 app.get("/", (req, res) => {
