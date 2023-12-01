@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const cruisePackageSchema = new mongoose.Schema(
   {
+    type: {
+      type: String,
+      required: [true, "A cruise package must have a package type!"],
+      enum: ["Sunset Cruise", "City Lights Cruise", "Others"], // Choose from available types
+      trim: true,
+    },
     image: {
       type: String,
       required: [true, "A cruise package must have a image!"],
@@ -54,133 +60,78 @@ const cruisePackageSchema = new mongoose.Schema(
     },
     isPriorityBoardingVisible: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a is priority boarding visible!",
-      ],
-      default: false,
+      default: true,
     },
     priorityBoarding: {
       type: Boolean,
-      required: [true, "A cruise package must have a priority boarding!"],
+      default: true,
     },
     isSkyDeckAccessAndSeatingVisible: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a is Sky deck access and seating visible!",
-      ],
-      default: false,
+      default: true,
     },
     skyDeckAccessAndSeating: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a sky deck access and seating!",
-      ],
+      default: true,
     },
     isSkyDeckAccessVisible: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a is sky deck access visible!",
-      ],
       default: false,
     },
     skyDeckAccess: {
       type: Boolean,
-      required: [true, "A cruise package must have a sky deck access!"],
+      default: false,
     },
     isSeatingAvailableVisible: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a is seating available visible!",
-      ],
       default: false,
     },
     seatingAvailable: {
       type: Boolean,
-      required: [true, "A cruise package must have a seating available!"],
+      default: false,
     },
     isLowerDeckAccessAndSeatingVisible: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a is lower deck access and seating visible!",
-      ],
-      default: false,
+      default: true,
     },
     lowerDeckAccessAndSeating: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a lower deck access and seating!",
-      ],
+      default: true,
     },
     isTemperatureControlledIndoorVisible: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a is temperature controlled indoor visible!",
-      ],
-      default: false,
+      default: true,
     },
     temperatureControlledIndoor: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a temperature controlled indoor!",
-      ],
+      default: true,
     },
     isFoodAndDrinksForPurchaseVisible: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a is food and drinks for purchase visible!",
-      ],
-      default: false,
+      default: true,
     },
     foodAndDrinksForPurchase: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a food and drinks for purchase!",
-      ],
+      default: true,
     },
     isPanoramicViewsOnFirstDeckVisible: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a is panoramic views on first deck visible!",
-      ],
       default: false,
     },
     panoramicViewsOnFirstDeck: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a panoramic views on first deck!",
-      ],
+      default: false,
     },
     isCelebratingMusicEntertainmentVisible: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a is celebrating music entertainment visible!",
-      ],
       default: false,
     },
     celebratingMusicEntertainment: {
       type: Boolean,
-      required: [
-        true,
-        "A cruise package must have a celebrating music entertainment!",
-      ],
+      default: false,
     },
     isVisible: {
       type: Boolean,
-      required: [true, "A cruise package must have a iss Visible!"],
       default: true,
     },
   },
