@@ -34,6 +34,7 @@ app.get("/", (req, res) => {
 
 // Setup routes
 app.use("/api/v1/contacts", require("./routes/contactRoutes"));
+app.use("/api/v1/cruisePackages", require("./routes/cruisePackageRoutes"));
 
 // Error handling for unknown routes
 app.use(() => {
