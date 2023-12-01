@@ -101,18 +101,24 @@ router.patch(
         .json({ status: "error", message: "Invalid category!" });
     }
 
-    const contact = await Contact.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedContact = await Contact.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
-    if (!contact) {
+    if (!updatedContact) {
       return res
         .status(404)
         .json({ status: "error", message: "Contact not found!" });
     }
 
-    res.status(200).json({ status: "success", data: { contact } });
+    res
+      .status(200)
+      .json({ status: "success", data: { contact: updatedContact } });
   })
 );
 

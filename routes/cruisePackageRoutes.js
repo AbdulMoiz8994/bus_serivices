@@ -115,7 +115,7 @@ router.patch(
         .json({ status: "error", message: "All fields must be filled!" });
     }
 
-    const cruisePackage = await CruisePackage.findByIdAndUpdate(
+    const updatedCruisePackage = await CruisePackage.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
@@ -124,13 +124,16 @@ router.patch(
       }
     );
 
-    if (!cruisePackage) {
+    if (!updatedCruisePackage) {
       return res
         .status(404)
         .json({ status: "error", message: "Cruise Package not found!" });
     }
 
-    res.status(200).json({ status: "success", data: { cruisePackage } });
+    res.status(200).json({
+      status: "success",
+      data: { cruisePackage: updatedCruisePackage },
+    });
   })
 );
 
