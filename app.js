@@ -54,6 +54,7 @@ app.use(
   "/api/v1/groupsAndCharters",
   require("./routes/groupsAndChartersRoutes")
 );
+app.use("/api/v1/packages", require("./routes/packageRoutes"));
 
 // Error handling for unknown routes
 app.use(() => {
