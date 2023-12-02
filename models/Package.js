@@ -8,6 +8,11 @@ const packageSchema = new mongoose.Schema(
       enum: ["Hop-On Hop-Off Sightseeing Passes", "Liberty Cruises"], // Choose from available types
       trim: true,
     },
+    tag: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     image: {
       type: String,
       required: [true, "A package must have a image!"],
@@ -36,6 +41,10 @@ const packageSchema = new mongoose.Schema(
       type: String,
       required: [true, "A package must have a deal price!"],
       trim: true,
+    },
+    ticketSold: {
+      type: Number,
+      default: 0,
     },
     isHopOnHopOffDowntownVisible: {
       type: Boolean,
