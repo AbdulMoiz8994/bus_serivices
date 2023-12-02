@@ -8,6 +8,11 @@ const cruisePackageSchema = new mongoose.Schema(
       enum: ["Sunset Cruise", "City Lights Cruise", "Others"], // Choose from available types
       trim: true,
     },
+    tag: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     image: {
       type: String,
       required: [true, "A cruise package must have a image!"],
@@ -32,6 +37,10 @@ const cruisePackageSchema = new mongoose.Schema(
       type: String,
       required: [true, "A cruise package must have a deal price!"],
       trim: true,
+    },
+    ticketSold: {
+      type: Number,
+      default: 0,
     },
     location: {
       type: String,

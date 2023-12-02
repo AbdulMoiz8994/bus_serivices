@@ -11,6 +11,11 @@ const northPoleExpressPackageSchema = new mongoose.Schema(
       enum: ["NYC holiday lights"], // Choose from available types
       trim: true,
     },
+    tag: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     image: {
       type: String,
       required: [true, "A north pole express package must have a image!"],
@@ -38,6 +43,10 @@ const northPoleExpressPackageSchema = new mongoose.Schema(
       type: String,
       required: [true, "A north pole express package must have a deal price!"],
       trim: true,
+    },
+    ticketSold: {
+      type: Number,
+      default: 0,
     },
     location: {
       type: String,
