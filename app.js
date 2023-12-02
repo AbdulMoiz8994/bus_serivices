@@ -55,6 +55,10 @@ app.use(
   require("./routes/groupsAndChartersRoutes")
 );
 app.use("/api/v1/packages", require("./routes/packageRoutes"));
+app.use(
+  "/api/v1/attractionPassPackages",
+  require("./routes/attractionPassPackageRoutes")
+);
 
 // Error handling for unknown routes
 app.use(() => {
