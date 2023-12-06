@@ -115,10 +115,28 @@ router.post(
 router.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { type, image, title, price, dealPercentage, dealPrice } = req.body;
+    const {
+      type,
+      image,
+      title,
+      price,
+      dealPercentage,
+      dealPrice,
+      details,
+      extras,
+    } = req.body;
 
     // Validate fields
-    if (!type || !image || !title || !price || !dealPercentage || !dealPrice) {
+    if (
+      !type ||
+      !image ||
+      !title ||
+      !price ||
+      !dealPercentage ||
+      !dealPrice ||
+      !details.length ||
+      !extras.length
+    ) {
       return res
         .status(400)
         .json({ status: "error", message: "All fields must be filled!" });
@@ -138,10 +156,28 @@ router.post(
 router.patch(
   "/:id",
   asyncHandler(async (req, res) => {
-    const { type, image, title, price, dealPercentage, dealPrice } = req.body;
+    const {
+      type,
+      image,
+      title,
+      price,
+      dealPercentage,
+      dealPrice,
+      details,
+      extras,
+    } = req.body;
 
     // Validate fields
-    if (!type || !image || !title || !price || !dealPercentage || !dealPrice) {
+    if (
+      !type ||
+      !image ||
+      !title ||
+      !price ||
+      !dealPercentage ||
+      !dealPrice ||
+      !details.length ||
+      !extras.length
+    ) {
       return res
         .status(400)
         .json({ status: "error", message: "All fields must be filled!" });
