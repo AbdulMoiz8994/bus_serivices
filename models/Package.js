@@ -46,7 +46,6 @@ const packageSchema = new mongoose.Schema(
     },
     dealPrice: {
       type: String,
-      required: [true, "A package must have a deal price!"],
     },
     ticketSold: {
       type: Number,
