@@ -50,6 +50,7 @@ app.use(
   require("./routes/groupsAndCharterRoutes")
 );
 app.use("/api/v1/packages", require("./routes/packageRoutes"));
+app.use("/api/v1/orders", require("./routes/orderRoutes"));
 
 // Error handling for unknown routes
 app.use(() => {
