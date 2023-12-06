@@ -45,20 +45,11 @@ app.get("/", (req, res) => {
 
 // Setup routes
 app.use("/api/v1/contacts", require("./routes/contactRoutes"));
-app.use("/api/v1/cruisePackages", require("./routes/cruisePackageRoutes"));
-app.use(
-  "/api/v1/northPoleExpressPackages",
-  require("./routes/northPoleExpressPackageRoutes")
-);
 app.use(
   "/api/v1/groupsAndCharters",
-  require("./routes/groupsAndChartersRoutes")
+  require("./routes/groupsAndCharterRoutes")
 );
 app.use("/api/v1/packages", require("./routes/packageRoutes"));
-app.use(
-  "/api/v1/attractionPassPackages",
-  require("./routes/attractionPassPackageRoutes")
-);
 
 // Error handling for unknown routes
 app.use(() => {
