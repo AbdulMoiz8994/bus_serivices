@@ -41,8 +41,7 @@ const packageSchema = new mongoose.Schema(
       default: 0,
     },
     dealPercentage: {
-      type: String,
-      required: [true, "A package must have a deal percentage!"],
+      type: Number,
       trim: true,
     },
     dealPrice: {
