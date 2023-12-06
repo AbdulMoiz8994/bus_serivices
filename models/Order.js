@@ -40,6 +40,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: [true, "A order must have a status!"],
       enum: ["Processing", "Confirmed", "Canceled"],
+      default: "Processing",
     },
   },
   { timestamps: true }
