@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema(
   {
     package: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: [true, "A order must have a package!"],
       ref: "Package",
       trim: true,
