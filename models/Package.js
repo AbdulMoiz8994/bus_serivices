@@ -33,19 +33,19 @@ const packageSchema = new mongoose.Schema(
       trim: true,
     },
     price: {
-      type: Number,
+      type: String,
       required: [true, "A package must have a price!"],
     },
     perDayPrice: {
-      type: Number,
+      type: String,
       default: 0,
     },
     dealPercentage: {
-      type: Number,
+      type: String,
       trim: true,
     },
     dealPrice: {
-      type: Number,
+      type: String,
       required: [true, "A package must have a deal price!"],
     },
     ticketSold: {
