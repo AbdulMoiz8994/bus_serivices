@@ -2,10 +2,9 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
   {
-    package: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: [true, "A order must have a package!"],
-      ref: "Package",
+    title: {
+      type: String,
+      required: [true, "A order must have a package title!"],
       trim: true,
     },
     date: {
@@ -13,11 +12,28 @@ const orderSchema = new mongoose.Schema(
       required: [true, "A order must have a date!"],
       trim: true,
     },
+    time: {
+      type: String,
+      required: [true, "A order must have a time!"],
+      trim: true,
+    },
     adults: {
       type: Number,
       default: 0,
     },
+    adultsPrice: {
+      type: Number,
+      default: 0,
+    },
     kids: {
+      type: Number,
+      default: 0,
+    },
+    kidsPrice: {
+      type: Number,
+      default: 0,
+    },
+    totalPrice: {
       type: Number,
       default: 0,
     },
