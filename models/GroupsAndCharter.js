@@ -4,12 +4,12 @@ const groupsAndCharterSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: [true, "A groups and charters must have a first name!"],
+      // required: [true, "A groups and charters must have a first name!"],
       trim: true,
     },
     lastName: {
       type: String,
-      required: [true, "A groups and charters must have a last name!"],
+      // required: [true, "A groups and charters must have a last name!"],
       trim: true,
     },
     email: {
