@@ -1,50 +1,45 @@
 const { Router } = require("express");
 const asyncHandler = require("express-async-handler");
-const AttractionPassPackage = require("./../models/AttractionPassPackage");
 const cloudinary = require("cloudinary").v2;
+const GroupsAndCharter = require("../models/GroupsAndCharter");
 const fs = require("fs");
 const mongoose = require("mongoose");
 const path = require("path");
 
 const router = Router();
 
-// Get all attraction pass packages
+// Get all groups and charters
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const attractionPassPackages = await AttractionPassPackage.find();
+    const groupsAndCharters = await GroupsAndCharter.find();
 
     res.status(200).json({
       status: "success",
-      results: attractionPassPackages.length,
-      data: { attractionPassPackages },
+      results: groupsAndCharters.length,
+      data: { groupsAndCharters },
     });
   })
 );
 
-// Get attraction pass package
+// Get groups and charter
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
-    const attractionPassPackage = await AttractionPassPackage.findById(
-      req.params.id
-    );
+    const groupsAndCharter = await GroupsAndCharter.findById(req.params.id);
 
-    if (!attractionPassPackage) {
-      res.status(400).json({
-        status: "error",
-        message: "Attraction Pass Package not found!",
-      });
+    if (!groupsAndCharter) {
+      res
+        .status(400)
+        .json({ status: "error", message: "Groups And Charters not found!" });
       return;
     }
 
-    res
-      .status(200)
-      .json({ status: "success", data: { attractionPassPackage } });
+    res.status(200).json({ status: "success", data: { groupsAndCharter } });
   })
 );
 
-// Upload attraction pass package image
+// Upload package image
 router.post(
   "/upload/media",
   asyncHandler(async (req, res) => {
@@ -118,77 +113,134 @@ router.post(
   })
 );
 
-// Create attraction pass package
+// Create groups and charter
 router.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { type, image, title, price, dealPercentage, dealPrice } = req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      company,
+      comment,
+      noOfGuests,
+      pickupLocation,
+      pickupDate,
+      pickupTime,
+      dropOffLocation,
+      dropOffDate,
+      dropOffTime,
+    } = req.body;
 
     // Validate fields
-    if (!type || !image || !title || !price || !dealPercentage || !dealPrice) {
-      return res
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phone ||
+      !company ||
+      !comment ||
+      !noOfGuests ||
+      !pickupLocation ||
+      !pickupDate ||
+      !pickupTime ||
+      !dropOffLocation ||
+      !dropOffDate ||
+      !dropOffTime
+    ) {
+      res
         .status(400)
         .json({ status: "error", message: "All fields must be filled!" });
+      return;
     }
 
-    const newAttractionPassPackage = await AttractionPassPackage.create(
-      req.body
-    );
+    const newGroupsAndCharter = await GroupsAndCharter.create(req.body);
 
-    newAttractionPassPackage &&
+    newGroupsAndCharter &&
       res.status(201).json({
         status: "success",
-        message: "Attraction Pass Package created successfully.",
+        message: "Your request submitted successfully.",
       });
   })
 );
 
-// Update attraction pass package
+// Update groups and charter
 router.patch(
   "/:id",
   asyncHandler(async (req, res) => {
-    const { type, image, title, price, dealPercentage, dealPrice } = req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      company,
+      comment,
+      noOfGuests,
+      pickupLocation,
+      pickupDate,
+      pickupTime,
+      dropOffLocation,
+      dropOffDate,
+      dropOffTime,
+    } = req.body;
 
     // Validate fields
-    if (!type || !image || !title || !price || !dealPercentage || !dealPrice) {
-      return res
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phone ||
+      !company ||
+      !comment ||
+      !noOfGuests ||
+      !pickupLocation ||
+      !pickupDate ||
+      !pickupTime ||
+      !dropOffLocation ||
+      !dropOffDate ||
+      !dropOffTime
+    ) {
+      res
         .status(400)
         .json({ status: "error", message: "All fields must be filled!" });
+      return;
     }
 
-    const updatedAttractionPassPackage =
-      await AttractionPassPackage.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedGroupsAndCharter = await GroupsAndCharter.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
         new: true,
         runValidators: true,
-      });
+      }
+    );
 
-    if (!updatedAttractionPassPackage) {
-      return res.status(404).json({
-        status: "error",
-        message: "Attraction Pass Package not found!",
-      });
+    if (!updatedGroupsAndCharter) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Groups And Charters not found!" });
     }
 
     res.status(200).json({
       status: "success",
-      data: { attractionPassPackage: updatedAttractionPassPackage },
+      data: { groupsAndCharter: updatedGroupsAndCharter },
     });
   })
 );
 
-// Delete attraction pass package
+// Delete groups and charter
 router.delete(
   "/:id",
   asyncHandler(async (req, res) => {
-    const attractionPassPackage = await AttractionPassPackage.findByIdAndDelete(
+    const groupsAndCharter = await GroupsAndCharter.findByIdAndDelete(
       req.params.id
     );
 
-    if (!attractionPassPackage) {
-      res.status(400).json({
-        status: "error",
-        message: "Attraction Pass Package not found!",
-      });
+    if (!groupsAndCharter) {
+      res
+        .status(400)
+        .json({ status: "error", message: "Groups And Charters not found!" });
       return;
     }
 

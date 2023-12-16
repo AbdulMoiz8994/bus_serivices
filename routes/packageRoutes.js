@@ -115,13 +115,43 @@ router.post(
 router.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { type, image, title, price, dealPercentage, dealPrice } = req.body;
+    const {
+      type,
+      image,
+      title,
+      price,
+      dealPercentage,
+      dealPrice,
+      details,
+      extras,
+    } = req.body;
 
     // Validate fields
-    if (!type || !image || !title || !price || !dealPercentage || !dealPrice) {
+    if (
+      !type ||
+      !image ||
+      !title ||
+      !price ||
+      !dealPercentage ||
+      !dealPrice ||
+      !details ||
+      !extras
+    ) {
       return res
         .status(400)
         .json({ status: "error", message: "All fields must be filled!" });
+    }
+
+    if (details.length === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Details must be provided!" });
+    }
+
+    if (extras.length === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Extras must be provided!" });
     }
 
     const newPackage = await Package.create(req.body);
@@ -138,10 +168,28 @@ router.post(
 router.patch(
   "/:id",
   asyncHandler(async (req, res) => {
-    const { type, image, title, price, dealPercentage, dealPrice } = req.body;
+    const {
+      type,
+      image,
+      title,
+      price,
+      dealPercentage,
+      dealPrice,
+      details,
+      extras,
+    } = req.body;
 
     // Validate fields
-    if (!type || !image || !title || !price || !dealPercentage || !dealPrice) {
+    if (
+      !type ||
+      !image ||
+      !title ||
+      !price ||
+      !dealPercentage ||
+      !dealPrice ||
+      !details.length ||
+      !extras.length
+    ) {
       return res
         .status(400)
         .json({ status: "error", message: "All fields must be filled!" });
