@@ -49,8 +49,11 @@ app.use(
   "/api/v1/groupsAndCharters",
   require("./routes/groupsAndCharterRoutes")
 );
+
 app.use("/api/v1/packages", require("./routes/packageRoutes"));
 app.use("/api/v1/orders", require("./routes/orderRoutes"));
+
+app.use("/api/v1/password",require("./routes/auth"));
 
 // Error handling for unknown routes
 app.use(() => {

@@ -40,7 +40,7 @@ const groupsAndCharterSchema = new mongoose.Schema(
     },
     pickupLocation: {
       type: String,
-      required: [true, "A groups and charters must have a pick up location!"],
+      // required: [true, "A groups and charters must have a pick up location!"],
       trim: true,
     },
     pickupDate: {
@@ -55,19 +55,20 @@ const groupsAndCharterSchema = new mongoose.Schema(
     },
     dropOffLocation: {
       type: String,
-      required: [true, "A groups and charters must have a drop Off location!"],
-      trim: true,
+      // required: [true, "A groups and charters must have a drop Off location!"],
+      // trim: true,
     },
     dropOffDate: {
       type: String,
-      required: [true, "A groups and charters must have a drop Off date!"],
-      trim: true,
+      // required: [true, "A groups and charters must have a drop Off date!"],
+      // trim: true,
     },
     dropOffTime: {
       type: String,
-      required: [true, "A groups and charters must have a drop Off time!"],
-      trim: true,
+      // required: [true, "A groups and charters must have a drop Off time!"],
+      // trim: true,
     },
+
   },
   { timestamps: true }
 );

@@ -135,8 +135,7 @@ router.post(
 
     // Validate fields
     if (
-      !firstName ||
-      !lastName ||
+      
       !email ||
       !phone ||
       !company ||
@@ -144,10 +143,8 @@ router.post(
       !noOfGuests ||
       !pickupLocation ||
       !pickupDate ||
-      !pickupTime ||
-      !dropOffLocation ||
-      !dropOffDate ||
-      !dropOffTime
+      !pickupTime
+
     ) {
       res
         .status(400)
