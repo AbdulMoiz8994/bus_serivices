@@ -22,13 +22,13 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Setup Cors
-const corsOption = {
-  origin: "*",
-  methods: "GET,OPTIONS,POST,PUT,PATCH,DELETE",
+const corsConfig = {
+  origin: '',
   credentials: true,
-};
-
-app.use(cors(corsOption));
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}
+app.use(cors(corsConfig))
+app.options("", cors(corsConfig))
 
 const { paymentsApi } = new Client({
   accessToken: process.env.ACCESS_TOKEN,
