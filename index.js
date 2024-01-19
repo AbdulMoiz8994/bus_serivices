@@ -164,12 +164,14 @@ app.post("/pay", async (request, res) => {
     // Convert cents to dollars
     const amountInDollars = amount / 100;
       let realAmount=amountInDollars.toFixed(2);
+      const numericAmount = Number(realAmount);
+
     let { result } = await paymentsApi.createPayment({
       idempotencyKey: randomUUID(),
       sourceId: body.sourceId,
       amountMoney: {
         currency: "USD",
-        amount: realAmount,
+        amount: numericAmount,
       },
     });
     const resultWithStrings = JSON.parse(
