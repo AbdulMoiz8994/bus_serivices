@@ -150,7 +150,7 @@ app.post("/pay", async (request, res) => {
     console.log("paymentsApi", resultWithStrings);
     if (resultWithStrings.payment.status == "COMPLETED") {
       const { ticketId, ticketNumber } = generateSecureTicket();
-      console.log("ticketId", ticketId, "ticketNumber", ticketNumber);
+      // console.log("ticketId", ticketId, "ticketNumber", ticketNumber);
       sendEmail(
         "ticket-confirmation",
         {
