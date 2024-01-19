@@ -9,8 +9,12 @@ const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+const dotenv = require("dotenv");
 
 const app = express();
+
+dotenv.config();
+
 // Middleware to parse incoming requests as JSON
 app.use(express.json({ limit: "10mb" }));
 
