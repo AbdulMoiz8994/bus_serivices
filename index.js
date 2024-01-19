@@ -55,7 +55,7 @@ if (runningEnvironment === "development") {
 
 const { paymentsApi } = new Client({
   accessToken: process.env.ACCESS_TOKEN,
-  environment: "sandbox",
+  environment: "production",
 });
 
 app.all("/*", function (req, res, next) {
