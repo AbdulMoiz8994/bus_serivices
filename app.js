@@ -3,9 +3,14 @@ const createHttpError = require("http-errors");
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const path = require("path");
+const { Client, Environment } = require("square");
+const { randomUUID } = require("crypto");
+const nodemailer = require("nodemailer");
+const handlebars = require("handlebars");
+const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
 
 const app = express();
-
 // Middleware to parse incoming requests as JSON
 app.use(express.json({ limit: "10mb" }));
 
@@ -20,6 +25,11 @@ const corsOption = {
 };
 
 app.use(cors(corsOption));
+
+const { paymentsApi } = new Client({
+  accessToken: process.env.ACCESS_TOKEN,
+  environment: "sandbox",
+});
 
 app.all("/*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -43,6 +53,126 @@ app.get("/", (req, res) => {
   });
 });
 
+const generateSecureRandomNumber = (length) => {
+  if (length % 2 !== 0) {
+    throw new Error("Length must be an even number");
+  }
+
+  const uuid = uuidv4();
+  const randomNumber = parseInt(uuid.slice(0, length), 16);
+
+  return randomNumber;
+};
+
+const generateSecureTicket = () => {
+  const ticketId = generateSecureRandomNumber(4);
+  const ticketNumber = generateSecureRandomNumber(10);
+
+  return {
+    ticketId: String(ticketId).padStart(4, "0"),
+    ticketNumber: String(ticketNumber).padStart(10, "0"),
+  };
+};
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+  },
+  // tls: {
+  //   rejectUnauthorized: false,
+  // },
+});
+
+const readHTMLFile = function (path, callback) {
+  fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, html);
+    }
+  });
+};
+
+const sendEmail = (template, replacements, form, subject, email) => {
+  console.log("replacements", replacements);
+
+  readHTMLFile(
+    `./public/confirm-ticket/${template}.html`,
+    function (err, html) {
+      var template = handlebars.compile(html);
+      //   var replacements = {
+      //     username: "ghous ahmed",
+      //     locationDescription: "test",
+      //   };
+      var htmlToSend = template(replacements);
+
+      const mailOptions = {
+        form: `${form} <${process.env.MAIL_USER}>`,
+        to: email,
+        subject: subject, //"Awaiting Admin Approval",
+        html: htmlToSend,
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error:", error.message);
+        } else {
+          console.log("Email sent:", info.response);
+        }
+      });
+    }
+  );
+};
+
+app.post("/pay", async (request, res) => {
+  try {
+    let body = request.body;
+    console.log("Body", body);
+    let { result } = await paymentsApi.createPayment({
+      idempotencyKey: randomUUID(),
+      sourceId: body.sourceId,
+      amountMoney: {
+        currency: "USD",
+        amount: body.amount,
+      },
+    });
+    const resultWithStrings = JSON.parse(
+      JSON.stringify(result, (key, value) => {
+        if (typeof value === "bigint") {
+          return value.toString();
+        }
+        return value;
+      })
+    );
+
+    console.log("paymentsApi", resultWithStrings);
+    if (resultWithStrings.payment.status == "COMPLETED") {
+      const { ticketId, ticketNumber } = generateSecureTicket();
+      console.log("ticketId", ticketId, "ticketNumber", ticketNumber);
+      sendEmail(
+        "ticket-confirmation",
+        {
+          Message: "Congratulations, This is your Ticket ID and Ticket Number",
+          TicketId: ticketId,
+          TicketNub: ticketNumber,
+          FirtName: body.formData.firstName,
+          LastName: body.formData.lastName,
+        },
+        "Hop-on Hop-off",
+        "Ticket Confirmation Status",
+        body.formData.email
+      );
+    }
+    return res
+      .status(200)
+      .json({ status: "Success", result: resultWithStrings });
+  } catch (err) {
+    return res.status(500).json({ error: err });
+  }
+});
+
 // Setup routes
 app.use("/api/v1/contacts", require("./routes/contactRoutes"));
 app.use(
@@ -53,7 +183,7 @@ app.use(
 app.use("/api/v1/packages", require("./routes/packageRoutes"));
 app.use("/api/v1/orders", require("./routes/orderRoutes"));
 
-app.use("/api/v1/password",require("./routes/auth"));
+app.use("/api/v1/password", require("./routes/auth"));
 
 // Error handling for unknown routes
 app.use(() => {

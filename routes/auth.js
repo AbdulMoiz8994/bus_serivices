@@ -43,8 +43,6 @@ router.post(
 
 module.exports = router;
 
-
-
 router.post("/get-password", asyncHandler(async(req, res) =>{
    const {password}= req.body;
 
