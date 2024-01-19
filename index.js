@@ -31,7 +31,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Setup Cors
 const corsConfig = {
-  origin: '',
+  origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }
