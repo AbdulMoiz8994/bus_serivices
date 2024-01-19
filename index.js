@@ -30,13 +30,12 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Setup Cors
-const corsConfig = {
-  origin: '*',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
-}
-app.use(cors(corsConfig))
-app.options("", cors(corsConfig))
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 
 
@@ -61,6 +60,7 @@ const { paymentsApi } = new Client({
 app.all("/*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  
   next();
 });
 
@@ -163,13 +163,13 @@ app.post("/pay", async (request, res) => {
 
     // Convert cents to dollars
     const amountInDollars = amount / 100;
-    
+      let realAmount=amountInDollars.toFixed(2);
     let { result } = await paymentsApi.createPayment({
       idempotencyKey: randomUUID(),
       sourceId: body.sourceId,
       amountMoney: {
         currency: "USD",
-        amount: amountInDollars,
+        amount: realAmount,
       },
     });
     const resultWithStrings = JSON.parse(
