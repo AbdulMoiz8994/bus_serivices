@@ -157,12 +157,19 @@ app.post("/pay", async (request, res) => {
   try {
     let body = request.body;
     console.log("Body", body);
+
+
+    const { amount } = body;
+
+    // Convert cents to dollars
+    const amountInDollars = amount / 100;
+    
     let { result } = await paymentsApi.createPayment({
       idempotencyKey: randomUUID(),
       sourceId: body.sourceId,
       amountMoney: {
         currency: "USD",
-        amount: body.amount,
+        amount: amountInDollars,
       },
     });
     const resultWithStrings = JSON.parse(
