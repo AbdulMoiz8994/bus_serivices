@@ -1,4 +1,3 @@
-const dotenv = require("dotenv");
 const http = require("http");
 const logger = require("morgan");
 const cors = require("cors");
@@ -12,6 +11,7 @@ const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+const dotenv = require("dotenv");
 
 
 
