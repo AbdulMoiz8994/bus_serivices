@@ -143,8 +143,11 @@ const transporter = nodemailer.createTransport({
   // },
 });
 
+const filePath = path.join(__dirname, 'public', 'confirm-ticket', 'ticket-confirmation.html');
+
 const readHTMLFile = function (path, callback) {
-  fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
+  console.log('Current Working Directory:', process.cwd(), "path", path);
+  fs.readFile(filePath, { encoding: "utf-8" }, function (err, html) {
     if (err) {
       console.log(err);
       callback(err);
@@ -155,26 +158,17 @@ const readHTMLFile = function (path, callback) {
 };
 
 const sendEmail = (template, replacements, form, subject, email) => {
-  console.log("replacements", replacements, "template",template);
+  console.log("replacements", replacements, "template",);
 
   readHTMLFile(
     `./public/confirm-ticket/${template}.html`,
     function (err, html) {
-      if (err) {
-        console.error('Error reading HTML file:', err);
-        // Handle error (e.g., log, return, etc.)
-        return;
-      }
-  
       var template = handlebars.compile(html);
-      var htmlToSend = template(replacements);
-
-      // var template = handlebars.compile(html);
       //   var replacements = {
       //     username: "ghous ahmed",
       //     locationDescription: "test",
       //   };
-      // var htmlToSend = template(replacements);
+      var htmlToSend = template(replacements);
 
       const mailOptions = {
         form: `${form} <${process.env.MAIL_USER}>`,
