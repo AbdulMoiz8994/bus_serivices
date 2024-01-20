@@ -31,7 +31,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Setup Cors
 const corsConfig = {
-  origin: ['http://localhost:3000', 'https://travelapp-m1iq.vercel.app'],
+  origin: 'http://localhost:3000',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }
@@ -40,7 +40,20 @@ app.options('*', cors(corsConfig));
 
 
 
+// app.all("/*", function (req, res, next) {
+//   const allowedOrigins = ['http://localhost:3000', 'https://travelapp-m1iq.vercel.app'];
+//   const origin = req.headers.origin;
 
+//   if (allowedOrigins.includes(origin)) {
+//     res.header("Access-Control-Allow-Origin", origin);
+//   }
+
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+//   res.header("Access-Control-Allow-Credentials", true);
+
+//   next();
+
+// });
 
 // const app = require("./app");
 const { connectDB } = require("./config/db");
@@ -58,20 +71,7 @@ const { paymentsApi } = new Client({
   environment: "production",
 });
 
-app.all("/*", function (req, res, next) {
-  const allowedOrigins = ['http://localhost:3000', 'https://travelapp-m1iq.vercel.app'];
-  const origin = req.headers.origin;
 
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
-
-  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-  res.header("Access-Control-Allow-Credentials", true);
-
-  next();
-
-});
 
 // Setup for file uploading
 app.use(
