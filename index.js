@@ -155,48 +155,40 @@ const readHTMLFile = function (path, callback) {
 };
 
 const sendEmail = (template, replacements, form, subject, email) => {
-  console.log("replacements", replacements);
+  console.log("replacements", replacements, "template",template);
 
   readHTMLFile(
     `./public/confirm-ticket/${template}.html`,
     function (err, html) {
       if (err) {
         console.error('Error reading HTML file:', err);
-      } else {
-        // Ensure html is defined before proceeding
-        if (html) {
-          // Continue with template compilation
-          var template = handlebars.compile(html);
-          var htmlToSend = template(replacements);
-
-          const mailOptions = {
-            form: `${form} <${process.env.MAIL_USER}>`,
-            to: email,
-            subject: subject, //"Awaiting Admin Approval",
-            html: htmlToSend,
-          };
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.error("Error:", error.message);
-            } else {
-              console.log("Email sent:", info.response);
-            }
-          });
-
-
-          // rest of the code...
-        } else {
-          console.error('HTML content is undefined.');
-        }
+        // Handle error (e.g., log, return, etc.)
+        return;
       }
+  
+      var template = handlebars.compile(html);
+      var htmlToSend = template(replacements);
+
       // var template = handlebars.compile(html);
-      // //   var replacements = {
-      // //     username: "ghous ahmed",
-      // //     locationDescription: "test",
-      // //   };
+      //   var replacements = {
+      //     username: "ghous ahmed",
+      //     locationDescription: "test",
+      //   };
       // var htmlToSend = template(replacements);
 
- 
+      const mailOptions = {
+        form: `${form} <${process.env.MAIL_USER}>`,
+        to: email,
+        subject: subject, //"Awaiting Admin Approval",
+        html: htmlToSend,
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error:", error.message);
+        } else {
+          console.log("Email sent:", info.response);
+        }
+      });
     }
   );
 };
@@ -238,9 +230,7 @@ app.post("/pay", async (request, res) => {
         "Hop-on Hop-off",
         "Ticket Confirmation Status",
         body.formData.email
-      ).catch(error => {
-        console.error('Error sending email:', error);
-      });;
+      )
     }
     return res
       .status(200)
