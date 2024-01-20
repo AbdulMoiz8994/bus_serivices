@@ -76,18 +76,9 @@ const server = http.createServer(app);
 // const app = require("./app");
 const { connectDB } = require("./config/db");
 
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 
-app.use(express.json({ limit: "10mb" }));
-
-// Middleware to parse URL-encoded data from form submissions
-app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 const runningEnvironment = process.env.NODE_ENV;
 
