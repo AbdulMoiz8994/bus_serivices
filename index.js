@@ -12,8 +12,6 @@ const handlebars = require("handlebars");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const dotenv = require("dotenv");
-const bodyParser = require("body-parser");
-const morgan = require("morgan");
 
 
 
@@ -26,29 +24,26 @@ const server = http.createServer(app);
 
 // console.log("process.env >>>>>", process.env);
 
-// app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "10mb" }));
 
 // Middleware to parse URL-encoded data from form submissions
-// app.use(express.urlencoded({ limit: "10mb", extended: true }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Setup Cors
 const corsConfig = {
-  origin: 'https://travelapp-m1iq.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
+  origin: ['http://localhost:3000', 'https://travelapp-m1iq.vercel.app'],
   credentials: true,
-};
-
-app.use(cors(corsConfig));
-
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan("short"));
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}
+app.use(cors(corsConfig))
+app.options("", cors(corsConfig))
 
 
-const { connectDB } = require("./config/db");
+
+
 
 // const app = require("./app");
+const { connectDB } = require("./config/db");
 
 
 const runningEnvironment = process.env.NODE_ENV;
@@ -64,11 +59,8 @@ const { paymentsApi } = new Client({
 });
 
 // app.all("/*", function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', 'https://travelapp-m1iq.vercel.app');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   res.header('Access-Control-Allow-Credentials', 'true');
-  
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
 //   next();
 // });
 
@@ -165,21 +157,12 @@ app.post("/pay", async (request, res) => {
   try {
     let body = request.body;
     console.log("Body", body);
-
-
-    const { amount } = body;
-
-    // Convert cents to dollars
-    const amountInDollars = amount / 100;
-      let realAmount=amountInDollars.toFixed(2);
-      const numericAmount = Number(realAmount);
-
     let { result } = await paymentsApi.createPayment({
       idempotencyKey: randomUUID(),
       sourceId: body.sourceId,
       amountMoney: {
         currency: "USD",
-        amount: numericAmount,
+        amount: body.amount,
       },
     });
     const resultWithStrings = JSON.parse(
