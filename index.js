@@ -143,11 +143,8 @@ const transporter = nodemailer.createTransport({
   // },
 });
 
-const filePath = path.join(__dirname, 'public', 'confirm-ticket', 'ticket-confirmation.html');
-
 const readHTMLFile = function (path, callback) {
-  console.log('Current Working Directory:', process.cwd(), "path", path);
-  fs.readFile(filePath, { encoding: "utf-8" }, function (err, html) {
+  fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
     if (err) {
       console.log(err);
       callback(err);
@@ -158,7 +155,7 @@ const readHTMLFile = function (path, callback) {
 };
 
 const sendEmail = (template, replacements, form, subject, email) => {
-  console.log("replacements", replacements, "template",);
+  console.log("replacements", replacements);
 
   readHTMLFile(
     `./public/confirm-ticket/${template}.html`,
@@ -224,7 +221,7 @@ app.post("/pay", async (request, res) => {
         "Hop-on Hop-off",
         "Ticket Confirmation Status",
         body.formData.email
-      )
+      );
     }
     return res
       .status(200)
