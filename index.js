@@ -30,26 +30,6 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Setup Cors
-
-
-
-// app.all("/*", function (req, res, next) {
-//   const allowedOrigins = ['http://localhost:3000', 'https://travelapp-m1iq.vercel.app'];
-//   const origin = req.headers.origin;
-
-//   if (allowedOrigins.includes(origin)) {
-//     res.header("Access-Control-Allow-Origin", origin);
-//   }
-
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-//   res.header("Access-Control-Allow-Credentials", true);
-
-//   next();
-
-// });
-
-// const app = require("./app");
-const { connectDB } = require("./config/db");
 const corsConfig = {
   origin: '*',
   credentials: true,
@@ -80,6 +60,26 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
+
+
+// app.all("/*", function (req, res, next) {
+//   const allowedOrigins = ['http://localhost:3000', 'https://travelapp-m1iq.vercel.app'];
+//   const origin = req.headers.origin;
+
+//   if (allowedOrigins.includes(origin)) {
+//     res.header("Access-Control-Allow-Origin", origin);
+//   }
+
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+//   res.header("Access-Control-Allow-Credentials", true);
+
+//   next();
+
+// });
+
+// const app = require("./app");
+const { connectDB } = require("./config/db");
+
 
 const runningEnvironment = process.env.NODE_ENV;
 
