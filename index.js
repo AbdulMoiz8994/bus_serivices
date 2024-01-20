@@ -36,7 +36,7 @@ const corsConfig = {
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }
 app.use(cors(corsConfig))
-app.options("", cors(corsConfig))
+app.options('*', cors(corsConfig));
 
 
 
@@ -58,11 +58,20 @@ const { paymentsApi } = new Client({
   environment: "production",
 });
 
-// app.all("/*", function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   next();
-// });
+app.all("/*", function (req, res, next) {
+  const allowedOrigins = ['http://localhost:3000', 'https://travelapp-m1iq.vercel.app'];
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+
+  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+  res.header("Access-Control-Allow-Credentials", true);
+
+  next();
+
+});
 
 // Setup for file uploading
 app.use(
