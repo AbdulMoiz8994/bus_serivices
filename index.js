@@ -144,6 +144,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const readHTMLFile = function (path, callback) {
+  console.log("pathpathpath",path);
   fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
     if (err) {
       console.log("errerrerrerr",err);
@@ -158,7 +159,7 @@ const sendEmail = (template, replacements, form, subject, email) => {
   console.log("replacements", replacements, "template",);
 
   readHTMLFile(
-    `./ticket-confirmation.html`,
+    `./ticket.html`,
     function (err, html) {
       console.log('HTML Content:', html);
 
@@ -217,7 +218,7 @@ app.post("/pay", async (request, res) => {
       const { ticketId, ticketNumber } = generateSecureTicket();
       // console.log("ticketId", ticketId, "ticketNumber", ticketNumber);
       sendEmail(
-        "ticket-confirmation",
+        "ticket",
         {
           Message: "Congratulations, This is your Ticket ID and Ticket Number",
           TicketId: ticketId,
