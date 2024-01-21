@@ -145,7 +145,9 @@ const transporter = nodemailer.createTransport({
 
 const readHTMLFile = function (path, callback) {
   console.log("pathpathpath",path);
-  fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
+  const filePath = path.join(__dirname, path);
+  console.log('File path:', filePath);
+  fs.readFile(filePath, { encoding: "utf-8" }, function (err, html) {
     if (err) {
       console.log("errerrerrerr",err);
       callback(err);
