@@ -158,7 +158,7 @@ const sendEmail = (template, replacements, form, subject, email) => {
   console.log("replacements", replacements, "template",);
 
   readHTMLFile(
-    `./public/confirm-ticket/ticket-confirmation.html`,
+    `./ticket-confirmation.html`,
     function (err, html) {
       console.log('HTML Content:', html);
 
