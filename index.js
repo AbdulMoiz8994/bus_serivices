@@ -728,6 +728,8 @@ Safe travels.
 };
 
 app.post("/pay", async (request, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+
   try {
     let body = request.body;
     console.log("Body", body);
