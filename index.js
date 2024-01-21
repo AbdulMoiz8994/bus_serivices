@@ -146,7 +146,7 @@ const transporter = nodemailer.createTransport({
 const readHTMLFile = function (path, callback) {
   fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
     if (err) {
-      console.log(err);
+      console.log("errerrerrerr",err);
       callback(err);
     } else {
       callback(null, html);
@@ -155,11 +155,18 @@ const readHTMLFile = function (path, callback) {
 };
 
 const sendEmail = (template, replacements, form, subject, email) => {
-  console.log("replacements", replacements);
+  console.log("replacements", replacements, "template",);
 
   readHTMLFile(
-    `./public/confirm-ticket/${template}.html`,
+    `./public/confirm-ticket/ticket-confirmation.html`,
     function (err, html) {
+      console.log('HTML Content:', html);
+
+      if (err) {
+        console.error('Error reading HTML file:', err);
+        // Handle error (e.g., log, return, etc.)
+        return;
+      }
       var template = handlebars.compile(html);
       //   var replacements = {
       //     username: "ghous ahmed",
@@ -221,7 +228,7 @@ app.post("/pay", async (request, res) => {
         "Hop-on Hop-off",
         "Ticket Confirmation Status",
         body.formData.email
-      );
+      )
     }
     return res
       .status(200)
