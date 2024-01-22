@@ -41,7 +41,7 @@ app.options('*', cors(corsConfig));
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "https://nyiconictours.com/");
+  res.setHeader("Access-Control-Allow-Origin", "https://nyiconictours.com");
   // Request methods you wish to allow
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -50,7 +50,7 @@ app.use(function (req, res, next) {
   // Request headers you wish to allow
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
+    "*"
   );
 
   // Set to true if you need the website to include cookies in the requests sent
