@@ -87,10 +87,7 @@ if (runningEnvironment === "development") {
 }
 
 
-const { paymentsApi } = new Client({
-  accessToken: process.env.ACCESS_TOKEN,
-  environment: "production",
-});
+
 
 
 
@@ -109,7 +106,10 @@ app.get("/", (req, res) => {
     message: "Hello From Express App...",
   });
 });
-
+const { paymentsApi } = new Client({
+    accessToken: process.env.ACCESS_TOKEN,
+    environment: "production",
+  });
 const generateSecureRandomNumber = (length) => {
   if (length % 2 !== 0) {
     throw new Error("Length must be an even number");
