@@ -32,7 +32,6 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 // Setup Cors
 const corsConfig = {
   origin: 'https://nyiconictours.com',
-  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }
 app.use(cors(corsConfig))
@@ -40,23 +39,25 @@ app.options('*', cors(corsConfig));
 
 
 app.use(function (req, res, next) {
-    res.setHeader(
-        "Access-Control-Allow-Origin",
-        "https://nyiconictours.com"
-      );
-      res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
-      );
-      res.setHeader(
-        "Access-Control-Allow-Headers",
-        "Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers"
-      );
-      res.setHeader("Access-Control-Allow-Credentials", true);
-      res.setHeader("Access-Control-Allow-Private-Network", true);
-      //  Firefox caps this at 24 hours (86400 seconds). Chromium (starting in v76) caps at 2 hours (7200 seconds). The default value is 5 seconds.
-  // Pass to next layer of middleware
-  next();
+        // Website you wish to allow to connect
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        // Request methods you wish to allow
+        res.setHeader(
+          "Access-Control-Allow-Methods",
+          "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+        );
+        // Request headers you wish to allow
+        res.setHeader(
+          "Access-Control-Allow-Headers",
+          "X-Requested-With,content-type"
+        );
+      
+        // Set to true if you need the website to include cookies in the requests sent
+        // to the API (e.g. in case you use sessions)
+        res.setHeader("Access-Control-Allow-Credentials", true);
+      
+        // Pass to next layer of middleware
+        next();
 });
 
 
@@ -726,7 +727,6 @@ Safe travels.
 };
 
 app.post("/pay", async (request, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
 
   try {
     let body = request.body;
