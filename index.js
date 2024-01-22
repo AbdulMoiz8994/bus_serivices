@@ -31,7 +31,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Setup Cors
 const corsConfig = {
-  origin: 'https://nyiconictours.com/',
+  origin: 'https://nyiconictours.com',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }
