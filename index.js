@@ -770,10 +770,11 @@ app.post("/pay", async (request, res) => {
         "Ticket Confirmation Status",
         body.formData.email
       )
-    }
-    return res
+      return res
       .status(200)
       .json({ status: "Success", result: resultWithStrings });
+    }
+
   } catch (err) {
     return res.status(500).json({ error: err });
   }

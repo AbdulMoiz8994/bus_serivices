@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const runningEnvironment = process.env.NODE_ENV;
 
